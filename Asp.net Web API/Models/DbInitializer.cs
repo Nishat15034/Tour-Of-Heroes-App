@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Asp.net_Web_API.Models
+{
+    public class DbInitializer
+    {
+        private static readonly string[] Heroes = new[]
+        {
+            "Mr. Nice",
+            "Narco",
+            "Bombasto",
+            "Celeritas",
+            "Magneta",
+            "RubberMan",
+            "Dynama",
+            "Dr IQ",
+            "Magma",
+            "Tornado"
+        };
+
+        private readonly HeroesContext _context;
+
+        public DbInitializer(HeroesContext context)
+        {
+            _context = context;
+        }
+
+        public void Initialize()
+        {
+            if (_context.Hero.Any())
+            {
+                return;
+            }
+
+            _context.Hero.AddRange(Heroes.Select(name => new Hero { Name = name }));
+            _context.SaveChanges();
+        }
+    }
+}
